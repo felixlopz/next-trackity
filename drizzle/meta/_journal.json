@@ -22,6 +22,13 @@
       "when": 1723568866302,
       "tag": "0002_flaky_captain_marvel",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1723686689416,
+      "tag": "0003_certain_rocket_racer",
+      "breakpoints": true
     }
   ]
 }
