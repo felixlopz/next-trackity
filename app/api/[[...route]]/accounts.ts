@@ -25,6 +25,34 @@ const app = new Hono()
       data,
     });
   })
+  .get(
+    "/:id",
+    zValidator("param", z.object({ id: z.string().optional() })),
+    clerkMiddleware(),
+    async (c) => {
+      const auth = getAuth(c);
+      const { id } = c.req.valid("param");
+
+      if (id == null) {
+        return c.json({ error: "Missing Id" }, 400);
+      }
+
+      if (auth?.userId == null) {
+        return c.json({ error: "Unauthoraized" }, 401);
+      }
+
+      const [data] = await db
+        .select({ id: accounts.id, name: accounts.name })
+        .from(accounts)
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)));
+
+      if (data == null) {
+        return c.json({ error: "Not Found" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
   .post(
     "/",
     clerkMiddleware(),
@@ -70,6 +98,67 @@ const app = new Hono()
           )
         )
         .returning({ id: accounts.id });
+
+      return c.json({ data });
+    }
+  )
+  .patch(
+    "/:id",
+    clerkMiddleware(),
+    zValidator("param", z.object({ id: z.string().optional() })),
+    zValidator("json", insertAccountSchema.pick({ name: true })),
+    async (c) => {
+      const auth = getAuth(c);
+
+      const { id } = c.req.valid("param");
+      const values = c.req.valid("json");
+
+      if (id == null) {
+        return c.json({ error: "Missing Id" }, 400);
+      }
+
+      if (auth?.userId == null) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const [data] = await db
+        .update(accounts)
+        .set(values)
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
+        .returning();
+
+      if (data == null) {
+        return c.json({ error: "Not Found" }, 404);
+      }
+
+      return c.json({ data });
+    }
+  )
+  .delete(
+    "/:id",
+    clerkMiddleware(),
+    zValidator("param", z.object({ id: z.string().optional() })),
+    async (c) => {
+      const auth = getAuth(c);
+
+      const { id } = c.req.valid("param");
+
+      if (id == null) {
+        return c.json({ error: "Missing Id" }, 400);
+      }
+
+      if (auth?.userId == null) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const [data] = await db
+        .delete(accounts)
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
+        .returning({ id: accounts.id });
+
+      if (data == null) {
+        return c.json({ error: "Not Found" }, 404);
+      }
 
       return c.json({ data });
     }

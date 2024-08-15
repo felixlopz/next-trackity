@@ -20,6 +20,7 @@ const routes = app.route("/accounts", accounts);
 
 export const GET = handle(app);
 export const POST = handle(app);
-`c`;
+export const PATCH = handle(app);
+export const DELETE = handle(app);
 
 export type AppType = typeof routes;
