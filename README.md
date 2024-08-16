@@ -2,6 +2,7 @@
 [ ] Sheer Button Error on MobileNavigation
 [ ] Look for better error handling with names
 [ ] focus input on edit sheet is open for accounts
+[ ] user confirm close button does not work
 
 <!-- TODO TO MAKE TODAY AFTER RETURNING -->
 

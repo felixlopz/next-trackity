@@ -6,9 +6,5 @@ import { useNewAccountSheet } from "@/features/accounts/hooks/use-new-account-sh
 export default function Dashboard() {
   const { onOpen } = useNewAccountSheet();
 
-  return (
-    <div>
-      <Button onClick={onOpen}> Create Account</Button>
-    </div>
-  );
+  return <div>{/* <Button onClick={onOpen}> Create Account</Button> */}</div>;
 }
