@@ -9,3 +9,4 @@
 - [ ] Move actions and columnts from accoutns app router
 - [ ] Close calendar on select date
 - [ ] Create select for category and accounts
+- [ ] Reset Filters

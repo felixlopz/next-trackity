@@ -10,7 +10,7 @@ export function convertAmountFromMiliunits(amount: number): number {
 }
 
 export function convertAmountToMiliunits(amount: number): number {
-  return amount * 1000;
+  return Math.round(amount * 1000);
 }
 
 export function formatCurrency(value: number) {
@@ -19,4 +19,8 @@ export function formatCurrency(value: number) {
     currency: "USD",
     minimumFractionDigits: 2,
   }).format(value);
+}
+
+export function isValidDate(date: Date): boolean {
+  return !isNaN(date.getTime());
 }

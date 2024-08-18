@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { CardHeader, Card, CardContent, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { ImportTable } from "./import-table";
-import { convertAmountToMiliunits } from "@/lib/utils";
+import { convertAmountToMiliunits, isValidDate } from "@/lib/utils";
 import { format, parse } from "date-fns";
 
 const dateFormat = "yyyy-MM-dd HH:mm:ss";
-const outputFormat = "yyyy-MM-dd";
+const outputFormat = "yyyy-MM-dd HH:mm:ss";
 
 const requiredOptions = ["amount", "date", "payee"];
 
@@ -87,11 +87,17 @@ const ImportCard = ({ data, onCancel, onSubmit }: Props) => {
       }, {});
     });
 
-    const formattedData = arrayOfData.map((item) => ({
-      ...item,
-      amount: convertAmountToMiliunits(item.amount),
-      date: format(parse(item.date, dateFormat, new Date()), outputFormat),
-    }));
+    const formattedData = arrayOfData
+      .filter((item) => isValidDate(new Date(item.date)))
+      .map((item) => {
+        const dateToFormat = new Date(item.date);
+
+        return {
+          ...item,
+          amount: convertAmountToMiliunits(item.amount),
+          date: format(dateToFormat, outputFormat),
+        };
+      });
 
     onSubmit(formattedData);
   };
