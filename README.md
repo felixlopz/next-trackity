@@ -4,9 +4,8 @@
 - [ ] focus input on edit sheet is open for accounts
 - [ ] user confirm close button does not work
 - [ ] Can create empty Category
-
-<!-- TODO TO MAKE TODAY AFTER RETURNING -->
-
 - [ ] Add Loading Spinner To Update Form
 - [ ] Fix Table actions in the middle
 - [ ] Move actions and columnts from accoutns app router
+- [ ] Close calendar on select date
+- [ ] Create select for category and accounts

@@ -1,7 +1,7 @@
 import CurrencyInput from "react-currency-input-field";
 import { Info, MinusCircle, PlusCircle } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn, convertAmountFromMiliunits } from "@/lib/utils";
 
 import {
   Tooltip,

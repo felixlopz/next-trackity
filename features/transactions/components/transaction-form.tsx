@@ -16,7 +16,10 @@ import Select from "@/components/select";
 import DatePicker from "@/components/date-picker";
 import { Textarea } from "@/components/ui/textarea";
 import AmountInput from "@/components/amount-input";
-import { convertAmountToMiliunits } from "@/lib/utils";
+import {
+  convertAmountFromMiliunits,
+  convertAmountToMiliunits,
+} from "@/lib/utils";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -155,6 +158,7 @@ export const TransactionForm = ({
               <FormControl>
                 <AmountInput
                   {...field}
+                  value={field.value}
                   disabled={disabled}
                   placeholder="0.00"
                 />

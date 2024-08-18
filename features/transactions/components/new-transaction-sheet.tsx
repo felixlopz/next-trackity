@@ -28,11 +28,9 @@ export const NewTransactionSheet = () => {
 
   const categoryMutation = useCreateCategory();
   const categoryQuery = useGetCategories();
-
   const onCreateCategory = (name: string) => {
     categoryMutation.mutate({ name });
   };
-
   const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
     label: category.name,
     value: category.id,
@@ -40,7 +38,6 @@ export const NewTransactionSheet = () => {
 
   const accountMutation = useCreateAccount();
   const accountQuery = useGetAccounts();
-
   const onCreateAccount = (name: string) => {
     accountMutation.mutate({ name });
   };

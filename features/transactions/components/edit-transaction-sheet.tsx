@@ -2,8 +2,13 @@ import { useEditTransactionSheet } from "@/features/transactions/hooks/use-edit-
 import { useGetTransaction } from "@/features/transactions/api/use-get-transaction";
 import { useEditTransaction } from "@/features/transactions/api/use-edit-transaction";
 import { useDeleteTransaction } from "@/features/transactions/api/use-delete-transaction";
-
 import { TransactionForm } from "@/features/transactions/components/transaction-form";
+
+import { insertTransactionSchema } from "@/db/schema";
+import { useGetCategories } from "@/features/categories/api/use-get-categories";
+import { useCreateCategory } from "@/features/categories/api/use-create-category";
+import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 import {
   Sheet,
@@ -12,7 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { insertTransactionSchema } from "@/db/schema";
+
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { useConfirm } from "@/hooks/use-confirm";
@@ -33,9 +38,38 @@ export const EditTransactionSheet = () => {
   const editMutation = useEditTransaction(id);
   const deleteMutation = useDeleteTransaction(id);
 
-  const isPending = editMutation.isPending || deleteMutation.isPending;
+  const categoryMutation = useCreateCategory();
+  const categoryQuery = useGetCategories();
+  const onCreateCategory = (name: string) => {
+    categoryMutation.mutate({ name });
+  };
+  const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
+    label: category.name,
+    value: category.id,
+  }));
 
-  const isLoading = transactionQuery.isLoading;
+  const accountMutation = useCreateAccount();
+  const accountQuery = useGetAccounts();
+  const onCreateAccount = (name: string) => {
+    accountMutation.mutate({ name });
+  };
+
+  const accountOptions = (accountQuery.data ?? []).map((account) => ({
+    label: account.name,
+    value: account.id,
+  }));
+
+  const isPending =
+    editMutation.isPending ||
+    deleteMutation.isPending ||
+    transactionQuery.isLoading ||
+    categoryMutation.isPending ||
+    accountMutation.isPending;
+
+  const isLoading =
+    transactionQuery.isLoading ||
+    categoryQuery.isLoading ||
+    accountQuery.isLoading;
 
   const onSubmit = (values: FormValues) => {
     editMutation.mutate(values, {
@@ -57,8 +91,24 @@ export const EditTransactionSheet = () => {
   };
 
   const defatulValues = transactionQuery.data
-    ? { notes: transactionQuery.data.notes }
-    : { notes: "" };
+    ? {
+        accountId: transactionQuery.data.accountId,
+        categoryId: transactionQuery.data.categoryId,
+        amount: transactionQuery.data.amount.toString(),
+        date: transactionQuery.data.date
+          ? new Date(transactionQuery.data.date)
+          : new Date(),
+        payee: transactionQuery.data.payee,
+        notes: transactionQuery.data.notes,
+      }
+    : {
+        accountId: "",
+        categoryId: "",
+        amount: "",
+        date: new Date(),
+        payee: "",
+        notes: "",
+      };
 
   return (
     <>
@@ -66,7 +116,7 @@ export const EditTransactionSheet = () => {
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent className="space-y-4">
           <SheetHeader>
-            <SheetTitle>Edit Account</SheetTitle>
+            <SheetTitle>Edit Transaction</SheetTitle>
             <SheetDescription>Edit an existing transaction</SheetDescription>
           </SheetHeader>
           {isLoading ? (
@@ -74,14 +124,17 @@ export const EditTransactionSheet = () => {
               <Loader2 className="size-4 text-muted-foreground animate-spin" />
             </div>
           ) : (
-            // <TransactionForm
-            //   id={id}
-            //   onSubmit={onSubmit}
-            //   disabled={isPending}
-            //   defaultValues={{}}
-            //   onDelete={onDelete}
-            // />
-            <div></div>
+            <TransactionForm
+              id={id}
+              defaultValues={defatulValues}
+              onSubmit={onSubmit}
+              onDelete={onDelete}
+              disabled={isPending}
+              categoryOptions={categoryOptions}
+              onCreateCategory={onCreateCategory}
+              accountOptions={accountOptions}
+              onCreateAccount={onCreateAccount}
+            />
           )}
         </SheetContent>
       </Sheet>
