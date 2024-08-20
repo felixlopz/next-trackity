@@ -10,6 +10,6 @@
 - [ ] Create select for category and accounts
 - [ ] Reset Filters
 - [ ] stop hardcoded change of chart types
-- [ ] Todo add skeletons to loading charts
+- [ ] remove "./" from app folder
 
 - [ ] Migrate Auth System to Custom NextAuth

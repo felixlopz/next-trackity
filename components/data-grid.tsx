@@ -1,10 +1,10 @@
 "use client";
 
+import DataCard, { DataCardLoading } from "@/components/data-card";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
 import { formatDateRange } from "@/lib/utils";
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import DataCard, { DataCardLoading } from "./data-card";
 
 const DataGrid = () => {
   const { data, isLoading } = useGetSummary();

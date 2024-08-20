@@ -6,16 +6,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { formatDateRange } from "@/lib/utils";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
-import { Button } from "./ui/button";
 import { format, subDays } from "date-fns";
-import { formatDateRange } from "@/lib/utils";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { ChevronDown } from "lucide-react";
-import { Calendar } from "./ui/calendar";
 
 type Props = {};
 

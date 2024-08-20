@@ -1,5 +1,5 @@
-import { AccountFilter } from "./account-filter";
-import { DateFilter } from "./date-filter";
+import { AccountFilter } from "@/components/account-filter";
+import { DateFilter } from "@/components/date-filter";
 
 function Filters() {
   return (

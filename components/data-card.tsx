@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
-import { CountUp } from "./count-up";
+import { CountUp } from "@/components/count-up";
 
 const boxVariant = cva("rounded-md p-3 flex items-center justify-between", {
   variants: {

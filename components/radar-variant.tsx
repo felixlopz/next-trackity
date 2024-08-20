@@ -1,16 +1,11 @@
 import {
   ResponsiveContainer,
-  Tooltip,
-  Legend,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
 } from "recharts";
-import CustomTooltip from "./custom-tooltip";
-import { formatPercentage } from "@/lib/utils";
-import CategoryTooltip from "./category-tooltip";
 
 type Props = {
   data?: {

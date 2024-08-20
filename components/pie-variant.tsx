@@ -1,18 +1,14 @@
-import { format } from "date-fns";
 import {
-  CartesianGrid,
   ResponsiveContainer,
-  XAxis,
   PieChart,
   Tooltip,
-  Bar,
   Legend,
   Pie,
   Cell,
 } from "recharts";
-import CustomTooltip from "./custom-tooltip";
+import CategoryTooltip from "@/components/category-tooltip";
+
 import { formatPercentage } from "@/lib/utils";
-import CategoryTooltip from "./category-tooltip";
 
 type Props = {
   data?: {

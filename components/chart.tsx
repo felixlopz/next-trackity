@@ -15,11 +15,11 @@ import {
   LineChart,
   Loader2,
 } from "lucide-react";
-import AreaVariant from "./area-variant";
-import BarVariant from "./bar-variant";
-import LineVariant from "./line-variant";
+import AreaVariant from "@/components/area-variant";
+import BarVariant from "@/components/bar-variant";
+import LineVariant from "@/components/line-variant";
 import { useState } from "react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   data?: {
