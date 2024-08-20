@@ -1,4 +1,3 @@
-- [ ] Migrate Auth System to NextAuth
 - [ ] Sheer Button Error on MobileNavigation
 - [ ] Look for better error handling with names
 - [ ] focus input on edit sheet is open for accounts
@@ -10,3 +9,7 @@
 - [ ] Close calendar on select date
 - [ ] Create select for category and accounts
 - [ ] Reset Filters
+- [ ] stop hardcoded change of chart types
+- [ ] Todo add skeletons to loading charts
+
+- [ ] Migrate Auth System to Custom NextAuth
