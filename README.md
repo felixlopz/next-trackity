@@ -9,7 +9,9 @@
 - [ ] Close calendar on select date
 - [ ] Create select for category and accounts
 - [ ] Reset Filters
-- [ ] stop hardcoded change of chart types
-- [ ] remove "./" from app folder
+- [ ] Reogranaize folders
+- [ ] BulkUpdate
+- [ ] Keep looking row when update
+- [ ] BulkDelete from csv importation
 
 - [ ] Migrate Auth System to Custom NextAuth

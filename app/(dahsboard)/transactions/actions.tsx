@@ -35,7 +35,7 @@ export const Actions = ({ id }: Props) => {
   };
 
   return (
-    <>
+    <div className="bg-pink">
       <ConfirmDialog />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -62,6 +62,6 @@ export const Actions = ({ id }: Props) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };

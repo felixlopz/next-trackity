@@ -49,6 +49,7 @@ export const columns: ColumnDef<ResponseType>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-4"
         >
           Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -67,6 +68,7 @@ export const columns: ColumnDef<ResponseType>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-4"
         >
           Category
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -90,6 +92,7 @@ export const columns: ColumnDef<ResponseType>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-4"
         >
           Payee
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -104,6 +107,7 @@ export const columns: ColumnDef<ResponseType>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-4"
         >
           Amount
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -130,6 +134,7 @@ export const columns: ColumnDef<ResponseType>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-ml-4"
         >
           Account
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -147,6 +152,7 @@ export const columns: ColumnDef<ResponseType>[] = [
   },
   {
     id: "actions",
+
     cell: ({ row }) => {
       return <Actions id={row.original.id} />;
     },

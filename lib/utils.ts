@@ -1,6 +1,12 @@
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import {
+  addDays,
+  eachDayOfInterval,
+  format,
+  isSameDay,
+  subDays,
+} from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,7 +60,7 @@ export function fillMissingDays(
   return transactionsByDate;
 }
 
-type Period = {
+export type Period = {
   from: string | Date | undefined;
   to: string | Date | undefined;
 };
@@ -71,13 +77,13 @@ export function formatDateRange(period?: Period) {
   }
 
   if (period?.to) {
-    return `${format(period.from, "LLL dd")} - ${format(
-      period.to,
+    return `${format(addDays(new Date(period.from), 1), "LLL dd")} - ${format(
+      addDays(new Date(period.to), 1),
       "LLL dd, y"
     )}`;
   }
 
-  return format(period.from, "LLL dd, y");
+  return format(new Date(period.from), "LLL dd, y");
 }
 
 export function formatPercentage(

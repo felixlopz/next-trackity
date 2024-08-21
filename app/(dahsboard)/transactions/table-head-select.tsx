@@ -25,11 +25,11 @@ const TableHeadSelect = ({ columnIndex, onChange, selectedColumns }: Props) => {
     >
       <SelectTrigger
         className={cn(
-          "focus:ring-offset-0 focus:ring-transparent outline-none border-none bg-transparent capitalize",
+          "focus:ring-offset-0 focus:ring-transparent outline-none border-none bg-transparent capitalize w-auto -ml-4",
           currentSelect && "text-blue-500"
         )}
       >
-        <SelectValue placeholder="Skip"></SelectValue>
+        <SelectValue placeholder="Skip" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="skip">Skip</SelectItem>

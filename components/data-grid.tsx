@@ -12,8 +12,11 @@ const DataGrid = () => {
 
   const from = params.get("from") || "";
   const to = params.get("to") || "";
-  const accountId = params.get("accountId") || "";
-  const dateRangeLabel = formatDateRange({ to, from });
+
+  const dateRangeLabel = formatDateRange({
+    to,
+    from,
+  });
 
   if (isLoading) {
     return (
