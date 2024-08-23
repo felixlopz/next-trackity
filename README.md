@@ -1,17 +1,16 @@
-- [ ] Sheer Button Error on MobileNavigation
-- [ ] Look for better error handling with names
+- [x] Sheer Button Error on MobileNavigation
 - [ ] focus input on edit sheet is open for accounts
-- [ ] user confirm close button does not work
-- [ ] Can create empty Category
+- [x] user confirm close button does not work
+- [x] Can create empty Category
 - [ ] Add Loading Spinner To Update Form
-- [ ] Fix Table actions in the middle
-- [ ] Move actions and columnts from accoutns app router
+- [x] Fix Table actions in the middle
+- [ ] Move actions and columns from accoutns app router
 - [ ] Close calendar on select date
 - [ ] Create select for category and accounts
-- [ ] Reset Filters
 - [ ] Reogranaize folders
 - [ ] BulkUpdate
 - [ ] Keep looking row when update
 - [ ] BulkDelete from csv importation
 
+- [ ] Look for better error handling with names
 - [ ] Migrate Auth System to Custom NextAuth

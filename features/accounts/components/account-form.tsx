@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,7 @@ type Props = {
   onSubmit: (values: FormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  isLoading?: boolean;
 };
 
 export const AccountForm = ({
@@ -32,6 +33,7 @@ export const AccountForm = ({
   onSubmit,
   onDelete,
   disabled,
+  isLoading,
 }: Props) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -55,21 +57,24 @@ export const AccountForm = ({
         <FormField
           name="name"
           control={form.control}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
                   disabled={disabled}
                   placeholder="e.g Cash, Bank, Credit Card"
+                  hasErrors={fieldState.error != null}
                   {...field}
                 />
               </FormControl>
+              <FormMessage className="font-light" />
             </FormItem>
           )}
         />
         <Button className="w-full" disabled={disabled}>
           {id ? "Save Changes" : "Create account"}
+          {isLoading && <Loader2 className="size-4 ml-2 animate-spin" />}
         </Button>
         {id != null ? (
           <Button

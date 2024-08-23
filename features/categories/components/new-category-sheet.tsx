@@ -40,7 +40,8 @@ export const NewCategorySheet = () => {
         </SheetHeader>
         <CategoryForm
           onSubmit={onSubmit}
-          disabled={false}
+          disabled={categoryMutation.isPending}
+          isLoading={categoryMutation.isPending}
           defaultValues={{ name: "" }}
         />
       </SheetContent>

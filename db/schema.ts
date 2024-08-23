@@ -14,7 +14,10 @@ export const accountsRelations = relations(accounts, ({ many }) => ({
   transactions: many(transactions),
 }));
 
-export const insertAccountSchema = createInsertSchema(accounts);
+export const insertAccountSchema = createInsertSchema(accounts, {
+  name: (schema) =>
+    schema.name.min(4, "Account must be at least 4 characters long."),
+});
 
 export const categories = pgTable("categories", {
   id: text("id").primaryKey(),
@@ -27,7 +30,10 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
   transactions: many(transactions),
 }));
 
-export const insertCategorySchema = createInsertSchema(accounts);
+export const insertCategorySchema = createInsertSchema(categories, {
+  name: (schema) =>
+    schema.name.min(4, "Category must be at least 4 characters long."),
+});
 
 export const transactions = pgTable("transactions", {
   id: text("id").primaryKey(),

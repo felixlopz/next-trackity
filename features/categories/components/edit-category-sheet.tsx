@@ -78,6 +78,7 @@ export const EditCategorySheet = () => {
               id={id}
               onSubmit={onSubmit}
               disabled={isPending}
+              isLoading={isPending}
               defaultValues={defatulValues}
               onDelete={onDelete}
             />
