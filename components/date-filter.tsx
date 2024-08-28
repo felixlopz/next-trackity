@@ -32,8 +32,8 @@ export const DateFilter = ({}: Props) => {
   const defaultFrom = subDays(defaultTo, 30);
 
   const paramState = {
-    from: from ? new Date(from) : defaultFrom,
-    to: to ? new Date(to) : defaultTo,
+    from: from ? new Date(`${from}:00:00:00`) : defaultFrom,
+    to: to ? new Date(`${to}:00:00:00`) : defaultTo,
   };
 
   const [date, setDate] = useState<DateRange | undefined>(paramState);
