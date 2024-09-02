@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,8 @@ import DatePicker from "@/components/date-picker";
 import { Textarea } from "@/components/ui/textarea";
 import AmountInput from "@/components/amount-input";
 import { convertAmountToMiliunits } from "@/lib/utils";
+import { CreateAccountResponseType200 } from "@/features/accounts/api/use-create-account";
+import { CreateCategoryResponseType200 } from "@/features/categories/api/use-create-category";
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -38,10 +40,15 @@ type Props = {
   onSubmit: (values: ApiFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  isLoading?: boolean;
   accountOptions: { label: string; value: string }[];
   categoryOptions: { label: string; value: string }[];
-  onCreateAccount: (name: string) => void;
-  onCreateCategory: (name: string) => void;
+  onCreateAccount: (
+    name: string
+  ) => Promise<CreateAccountResponseType200 | null>;
+  onCreateCategory: (
+    name: string
+  ) => Promise<CreateCategoryResponseType200 | null>;
 };
 
 export const TransactionForm = ({
@@ -50,6 +57,7 @@ export const TransactionForm = ({
   onSubmit,
   onDelete,
   disabled,
+  isLoading,
   accountOptions,
   categoryOptions,
   onCreateAccount,
@@ -59,6 +67,8 @@ export const TransactionForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
+
+  const { setValue } = form;
 
   const handleSubmit = (values: FormValues) => {
     const amount = parseFloat(values.amount);
@@ -104,7 +114,12 @@ export const TransactionForm = ({
                   value={field.value}
                   onChange={field.onChange}
                   options={accountOptions}
-                  onCreate={onCreateAccount}
+                  onCreate={async (value) => {
+                    const result = await onCreateAccount(value);
+                    if (result != null) {
+                      setValue("accountId", result.data.id);
+                    }
+                  }}
                   disabled={disabled}
                 />
               </FormControl>
@@ -123,7 +138,12 @@ export const TransactionForm = ({
                   value={field.value}
                   onChange={field.onChange}
                   options={categoryOptions}
-                  onCreate={onCreateCategory}
+                  onCreate={async (value) => {
+                    const result = await onCreateCategory(value);
+                    if (result != null) {
+                      setValue("categoryId", result.data.id);
+                    }
+                  }}
                   disabled={disabled}
                 />
               </FormControl>
@@ -182,6 +202,7 @@ export const TransactionForm = ({
         />
         <Button className="w-full" disabled={disabled}>
           {id ? "Save Changes" : "Create Transaction"}
+          {isLoading && <Loader2 className="size-4 ml-2 animate-spin" />}
         </Button>
         {id != null ? (
           <Button

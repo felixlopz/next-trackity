@@ -4,6 +4,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/hono";
 import { toast } from "sonner";
 
+export type CreateCategoryResponseType200 = InferResponseType<
+  typeof client.api.categories.$post,
+  200
+>;
+
 type ResponseType = InferResponseType<typeof client.api.categories.$post>;
 type RequestType = InferRequestType<typeof client.api.categories.$post>["json"];
 

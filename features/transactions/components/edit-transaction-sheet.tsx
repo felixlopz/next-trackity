@@ -6,8 +6,14 @@ import { TransactionForm } from "@/features/transactions/components/transaction-
 
 import { insertTransactionSchema } from "@/db/schema";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import {
+  CreateCategoryResponseType200,
+  useCreateCategory,
+} from "@/features/categories/api/use-create-category";
+import {
+  CreateAccountResponseType200,
+  useCreateAccount,
+} from "@/features/accounts/api/use-create-account";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 import {
@@ -40,8 +46,15 @@ export const EditTransactionSheet = () => {
 
   const categoryMutation = useCreateCategory();
   const categoryQuery = useGetCategories();
-  const onCreateCategory = (name: string) => {
-    categoryMutation.mutate({ name });
+  const onCreateCategory = async (
+    name: string
+  ): Promise<CreateCategoryResponseType200 | null> => {
+    try {
+      // NOTE: using any because of the weird returning type of mutateAsync
+      return (await categoryMutation.mutateAsync({ name })) as any;
+    } catch (error) {}
+
+    return null;
   };
   const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
     label: category.name,
@@ -50,8 +63,14 @@ export const EditTransactionSheet = () => {
 
   const accountMutation = useCreateAccount();
   const accountQuery = useGetAccounts();
-  const onCreateAccount = (name: string) => {
-    accountMutation.mutate({ name });
+  const onCreateAccount = async (
+    name: string
+  ): Promise<CreateAccountResponseType200 | null> => {
+    try {
+      // NOTE: using any because of the weird returning type of mutateAsync
+      return (await accountMutation.mutateAsync({ name })) as any;
+    } catch (error) {}
+    return null;
   };
 
   const accountOptions = (accountQuery.data ?? []).map((account) => ({
@@ -130,6 +149,7 @@ export const EditTransactionSheet = () => {
               onSubmit={onSubmit}
               onDelete={onDelete}
               disabled={isPending}
+              isLoading={isPending}
               categoryOptions={categoryOptions}
               onCreateCategory={onCreateCategory}
               accountOptions={accountOptions}

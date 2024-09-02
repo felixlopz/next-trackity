@@ -11,9 +11,15 @@ import {
 } from "@/components/ui/sheet";
 import { insertTransactionSchema } from "@/db/schema";
 import { z } from "zod";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
+import {
+  CreateCategoryResponseType200,
+  useCreateCategory,
+} from "@/features/categories/api/use-create-category";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import {
+  CreateAccountResponseType200,
+  useCreateAccount,
+} from "@/features/accounts/api/use-create-account";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { Loader2 } from "lucide-react";
 
@@ -28,8 +34,15 @@ export const NewTransactionSheet = () => {
 
   const categoryMutation = useCreateCategory();
   const categoryQuery = useGetCategories();
-  const onCreateCategory = (name: string) => {
-    categoryMutation.mutate({ name });
+  const onCreateCategory = async (
+    name: string
+  ): Promise<CreateCategoryResponseType200 | null> => {
+    try {
+      // NOTE: using any because of the weird returning type of mutateAsync
+      return (await categoryMutation.mutateAsync({ name })) as any;
+    } catch (error) {}
+
+    return null;
   };
   const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
     label: category.name,
@@ -38,8 +51,14 @@ export const NewTransactionSheet = () => {
 
   const accountMutation = useCreateAccount();
   const accountQuery = useGetAccounts();
-  const onCreateAccount = (name: string) => {
-    accountMutation.mutate({ name });
+  const onCreateAccount = async (
+    name: string
+  ): Promise<CreateAccountResponseType200 | null> => {
+    try {
+      // NOTE: using any because of the weird returning type of mutateAsync
+      return (await accountMutation.mutateAsync({ name })) as any;
+    } catch (error) {}
+    return null;
   };
 
   const accountOptions = (accountQuery.data ?? []).map((account) => ({
@@ -79,6 +98,7 @@ export const NewTransactionSheet = () => {
           <TransactionForm
             onSubmit={onSubmit}
             disabled={isPending}
+            isLoading={isPending}
             categoryOptions={categoryOptions}
             onCreateCategory={onCreateCategory}
             accountOptions={accountOptions}

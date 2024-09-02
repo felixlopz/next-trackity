@@ -61,8 +61,8 @@ export function fillMissingDays(
 }
 
 export type Period = {
-  from: string | Date | undefined;
-  to: string | Date | undefined;
+  from: Date | undefined;
+  to: Date | undefined;
 };
 
 export function formatDateRange(period?: Period) {
@@ -77,8 +77,8 @@ export function formatDateRange(period?: Period) {
   }
 
   if (period?.to) {
-    return `${format(addDays(new Date(period.from), 1), "LLL dd")} - ${format(
-      addDays(new Date(period.to), 1),
+    return `${format(period.from, "LLL dd")} - ${format(
+      period.to,
       "LLL dd, y"
     )}`;
   }
