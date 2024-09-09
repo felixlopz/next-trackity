@@ -141,7 +141,7 @@ const app = new Hono()
     zValidator("json", z.array(insertTransactionSchema.omit({ id: true }))),
     async (c) => {
       const auth = getAuth(c);
-      const values = c.req.valid("json");
+      const newTransactions = c.req.valid("json");
 
       if (auth?.userId == null) {
         return c.json({ error: "Unauthorized" }, 401);
@@ -149,7 +149,12 @@ const app = new Hono()
 
       const data = await db
         .insert(transactions)
-        .values(values.map((value) => ({ id: createId(), ...value })))
+        .values(
+          newTransactions.map((transaction) => ({
+            id: createId(),
+            ...transaction,
+          }))
+        )
         .returning();
 
       return c.json({ data });

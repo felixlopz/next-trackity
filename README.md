@@ -5,6 +5,7 @@
 - [x] Add Loading Spinner To Update Form
 - [x] Fix Table actions in the middle
 - [x] Create select for category and accounts
+- [ ] BulkCreate Not Working
 
 - [ ] BulkUpdate
 - [ ] Keep looking row when update

@@ -30,7 +30,7 @@ const INITIAL_IMPORT_RESULTS = {
 };
 
 const TransactionsPage = () => {
-  const [SelectAccountDialog, confirm] = useSelectAccount();
+  const [SelectAccountDialog, confirmSelectAccountDialog] = useSelectAccount();
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
@@ -56,7 +56,7 @@ const TransactionsPage = () => {
   const onSubmitImport = async (
     values: (typeof transactions.$inferInsert)[]
   ) => {
-    const accountId = await confirm();
+    const accountId = await confirmSelectAccountDialog();
 
     if (accountId == null) {
       return;

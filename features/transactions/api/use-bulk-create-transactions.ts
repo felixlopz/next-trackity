@@ -19,15 +19,23 @@ export const useBulkCreateTransactions = () => {
       const response = await client.api.transactions["bulk-create"].$post({
         json,
       });
+
+      if (response.ok == false) {
+        throw new Error(
+          "Failed to create transactions, please make sure all formats of data is correct"
+        );
+      }
+
       return await response.json();
     },
     onSuccess: () => {
       toast.success("Transactions created");
+
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
-    onError: () => {
-      toast.error("Failed to create transactions");
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 

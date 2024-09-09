@@ -17,7 +17,9 @@ export function convertAmountFromMiliunits(amount: number): number {
 }
 
 export function convertAmountToMiliunits(amount: number): number {
-  return Math.round(amount * 1000);
+  const formattedAmount = parseFloat(amount.toString().replace(/,/g, ""));
+
+  return Math.round(formattedAmount * 1000);
 }
 
 export function formatCurrency(value: number) {

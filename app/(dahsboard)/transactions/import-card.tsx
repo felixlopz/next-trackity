@@ -3,9 +3,8 @@ import { CardHeader, Card, CardContent, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { ImportTable } from "./import-table";
 import { convertAmountToMiliunits, isValidDate } from "@/lib/utils";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 
-const dateFormat = "yyyy-MM-dd HH:mm:ss";
 const outputFormat = "yyyy-MM-dd HH:mm:ss";
 
 const requiredOptions = ["amount", "date", "payee"];
