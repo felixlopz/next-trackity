@@ -3,6 +3,7 @@
 import DataCard, { DataCardLoading } from "@/components/data-card";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
 import { formatDateRange } from "@/lib/utils";
+import { subDays } from "date-fns";
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
@@ -13,9 +14,12 @@ const DataGrid = () => {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
+  const defaultTo = new Date();
+  const defaultFrom = subDays(defaultTo, 30);
+
   const dateRangeLabel = formatDateRange({
-    to: new Date(to),
-    from: new Date(from),
+    from: from ? new Date(`${from}:00:00:00`) : defaultFrom,
+    to: to ? new Date(`${to}:00:00:00`) : defaultTo,
   });
 
   if (isLoading) {
