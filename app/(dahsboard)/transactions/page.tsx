@@ -1,22 +1,24 @@
 "use client";
+import { useState } from "react";
+import { Loader2, Plus } from "lucide-react";
+
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transactions";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
+import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
+import { useBulkEditTransactionSheet } from "@/features/transactions/hooks/use-bulk-edit-transaction-sheet";
+import { useNewTransactionSheet } from "@/features/transactions/hooks/use-new-transaction-sheet";
 
+import { transactions } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import { CardHeader, Card, CardContent, CardTitle } from "@/components/ui/card";
-import { useNewTransactionSheet } from "@/features/transactions/hooks/use-new-transaction-sheet";
-import { Loader2, Plus } from "lucide-react";
 import { DataTable } from "@/components/data-table";
-
-import { columns } from "./columns";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+
 import UploadButton from "./upload-button";
 import ImportCard from "./import-card";
-import { transactions } from "@/db/schema";
-import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
-import { toast } from "sonner";
-import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
+
+import { columns } from "./columns";
 
 enum VARIANTS {
   LIST = "LIST",
@@ -35,6 +37,8 @@ const TransactionsPage = () => {
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
   const { onOpen } = useNewTransactionSheet();
+  const { onOpen: onOpenBulkEditTransactions } = useBulkEditTransactionSheet();
+
   const bulkCreateMutation = useBulkCreateTransactions();
   const deleteTransactions = useBulkDeleteTransactions();
   const transactionQuery = useGetTransactions();
@@ -73,6 +77,8 @@ const TransactionsPage = () => {
       },
     });
   };
+
+  const onUpdateTransactions = () => {};
 
   if (transactionQuery.isLoading) {
     return (
@@ -128,6 +134,10 @@ const TransactionsPage = () => {
             onDelete={(rows) => {
               const ids = rows.map((r) => r.original.id);
               deleteTransactions.mutate({ ids });
+            }}
+            onUpdate={(rows) => {
+              const ids = rows.map((r) => r.original.id);
+              onOpenBulkEditTransactions(ids);
             }}
           />
         </CardContent>

@@ -13,6 +13,7 @@ import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 import { subDays, parse } from "date-fns";
+import { bulkTransactionUpdateRequestSchema } from "@/features/transactions/components/bulk-edit-transaction-sheet";
 
 const drizzleDateFormat = "yyyy-MM-dd";
 
@@ -245,6 +246,55 @@ const app = new Hono()
       }
 
       return c.json({ data });
+    }
+  )
+  .put(
+    "/bulk-edit",
+    clerkMiddleware(),
+    zValidator(
+      "json",
+      z.object({
+        ids: z.array(z.string()),
+        fields: bulkTransactionUpdateRequestSchema,
+      })
+    ),
+    async (c) => {
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
+
+      const { ids, fields } = values;
+
+      if (auth?.userId == null) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const transactionsToUpdate = db.$with("transaction_to_update").as(
+        db
+          .select({ id: transactions.id })
+          .from(transactions)
+          .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+          .where(
+            and(inArray(transactions.id, ids), eq(accounts.userId, auth.userId))
+          )
+      );
+
+      const [data] = await db
+        .with(transactionsToUpdate)
+        .update(transactions)
+        .set(fields)
+        .where(
+          inArray(
+            transactions.id,
+            sql`(select id from ${transactionsToUpdate})`
+          )
+        )
+        .returning();
+
+      if (data == null) {
+        return c.json({ error: "Server Error" }, 500);
+      }
+
+      return c.json({});
     }
   )
   .delete(

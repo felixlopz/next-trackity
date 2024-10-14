@@ -1,3 +1,5 @@
+"use client";
+
 import { z } from "zod";
 import { Loader2, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";

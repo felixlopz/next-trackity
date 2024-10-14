@@ -25,7 +25,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Trash } from "lucide-react";
+import { Pen, Trash } from "lucide-react";
 import { useConfirm } from "@/hooks/use-confirm";
 import { cn } from "@/lib/utils";
 
@@ -34,6 +34,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   filterKey: string;
   onDelete: (rows: Row<TData>[]) => void;
+  onUpdate?: (rows: Row<TData>[]) => void;
   disabled?: boolean;
 }
 
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   filterKey,
   onDelete,
   disabled,
+  onUpdate,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -60,6 +62,11 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    initialState: {
+      pagination: {
+        pageSize: 25,
+      },
+    },
     state: {
       sorting,
       columnFilters,
@@ -75,7 +82,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <ConfirmDialog />
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder={`Filter ${filterKey}`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
@@ -85,23 +92,42 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button
-            disabled={disabled}
-            size="sm"
-            variant="outline"
-            className="ml-auto font-normal text-xs"
-            onClick={async () => {
-              const ok = await confirm();
+          <div>
+            {onUpdate != null && (
+              <Button
+                disabled={disabled}
+                size="sm"
+                variant="outline"
+                className="ml-auto font-normal text-xs mr-4"
+                onClick={() => {
+                  if (onUpdate != null) {
+                    onUpdate(table.getSelectedRowModel().rows);
+                    table.resetRowSelection();
+                  }
+                }}
+              >
+                <Pen className="size-4 mr-2" />
+                Edit ({table.getFilteredSelectedRowModel().rows.length})
+              </Button>
+            )}
+            <Button
+              disabled={disabled}
+              size="sm"
+              variant="outline-danger"
+              color="red"
+              className="ml-auto font-normal text-xs"
+              onClick={async () => {
+                const ok = await confirm();
 
-              if (ok) {
-                onDelete(table.getSelectedRowModel().rows);
-                table.resetRowSelection();
-              }
-            }}
-          >
-            <Trash className="size-4 mr-2" />
-            Delete ({table.getFilteredSelectedRowModel().rows.length})
-          </Button>
+                if (ok) {
+                  onDelete(table.getSelectedRowModel().rows);
+                }
+              }}
+            >
+              <Trash className="size-4 mr-2" />
+              Delete ({table.getFilteredSelectedRowModel().rows.length})
+            </Button>
+          </div>
         )}
       </div>
 

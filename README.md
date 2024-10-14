@@ -7,14 +7,17 @@
 - [x] Create select for category and accounts
 - [x] BulkCreate Not Working
 
-- [ ] BulkUpdate
+- [x] BulkUpdate
+
+  - [x] Modify the data table element I accidentaly modified the global component,
+  - [x] Pass the ids and the selected values to update to the bulk-up endpoint of the transaction api
+
+- [ ] Change Banner Message Corresponding Page (example doesn't make sense to a have a date filtering on categories, accounts pages)
+
 - [ ] Keep looking row when update
 - [ ] BulkDelete from csv importation
-- [ ] Look for better error handling with names
 - [ ] Disable Dates
 
-- [ ] Reogranaize folders
-
-  - [ ] Move actions and columns from accoutns app router
-
+- [ ] Look for better error handling with names
 - [ ] Implement Subscription Base Systems
+- [ ] Landing Page

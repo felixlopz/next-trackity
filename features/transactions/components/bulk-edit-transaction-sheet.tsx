@@ -1,6 +1,6 @@
 import { BulkTransactionForm } from "@/features/transactions/components/bulk-transaction-form";
 import { useBulkEditTransactionSheet } from "@/features/transactions/hooks/use-bulk-edit-transaction-sheet";
-import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
+import { useBulkUpdateTransactions } from "@/features/transactions/api/use-bulk-update-transactions";
 
 import {
   Sheet,
@@ -23,17 +23,19 @@ import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { Loader2 } from "lucide-react";
 
 export const formSchema = z.object({
-  accountId: z.string().nullable().optional(),
-  categoryId: z.string().nullable().optional(),
-  notes: z.string().nullable().optional(),
+  accountId: z.string().optional(),
+  categoryId: z.string().optional(),
+  notes: z.string().optional(),
 });
+
+export const bulkTransactionUpdateRequestSchema = formSchema;
 
 type FormValues = z.input<typeof formSchema>;
 
 export const BulkEditTransactionSheet = () => {
-  const { isOpen, onClose } = useBulkEditTransactionSheet();
+  const { isOpen, onClose, ids } = useBulkEditTransactionSheet();
 
-  const transactionMutation = useCreateTransaction();
+  const bulkUpdateTransactionMutation = useBulkUpdateTransactions();
 
   const categoryMutation = useCreateCategory();
   const categoryQuery = useGetCategories();
@@ -70,25 +72,30 @@ export const BulkEditTransactionSheet = () => {
   }));
 
   const isPending =
-    transactionMutation.isPending ||
+    bulkUpdateTransactionMutation.isPending ||
     categoryMutation.isPending ||
     accountMutation.isPending;
 
   const isLoading = categoryQuery.isLoading || accountQuery.isLoading;
 
-  const onSubmit = (values: FormValues) => {
-    // transactionMutation.mutate(values, {
-    //   onSuccess: () => {
-    //     onClose();
-    //   },
-    // });
+  const onSubmit = (fields: FormValues) => {
+    bulkUpdateTransactionMutation.mutate(
+      { ids, fields },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      }
+    );
   };
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="space-y-4">
         <SheetHeader>
-          <SheetTitle>Edit selected transactions</SheetTitle>
+          <SheetTitle>
+            Edit selected transactions {ids != null ? `(${ids.length})` : ""}
+          </SheetTitle>
           <SheetDescription>
             Edit category or accounts from selected transactions
           </SheetDescription>

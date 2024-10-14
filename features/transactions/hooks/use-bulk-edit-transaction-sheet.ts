@@ -1,17 +1,17 @@
 import { create } from "zustand";
 
-type EditTransactionState = {
-  id?: string;
+type BulkEditTransactionState = {
+  ids: string[];
   isOpen: boolean;
-  onOpen: (id: string) => void;
+  onOpen: (ids: string[]) => void;
   onClose: () => void;
 };
 
-export const useBulkEditTransactionSheet = create<EditTransactionState>(
+export const useBulkEditTransactionSheet = create<BulkEditTransactionState>(
   (set) => ({
-    id: undefined,
+    ids: [],
     isOpen: false,
-    onOpen: (id: string) => set({ isOpen: true, id }),
-    onClose: () => set({ isOpen: false, id: undefined }),
+    onOpen: (ids: string[]) => set({ isOpen: true, ids }),
+    onClose: () => set({ isOpen: false, ids: undefined }),
   })
 );
