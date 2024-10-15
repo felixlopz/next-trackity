@@ -5,6 +5,7 @@ export interface Route {
   label: string;
   welcomeMessage: string;
   filters: FilterType[];
+  persistParams?: boolean;
 }
 
 export const routes: Route[] = [
@@ -13,12 +14,14 @@ export const routes: Route[] = [
     label: "Overview",
     welcomeMessage: "This is your financial report.",
     filters: ["AccountFilter", "DateFilter"],
+    persistParams: true,
   },
   {
     href: "/transactions",
     label: "Transactions",
     welcomeMessage: "These are your transactions.",
     filters: ["AccountFilter", "DateFilter"],
+    persistParams: true,
   },
   {
     href: "/accounts",
