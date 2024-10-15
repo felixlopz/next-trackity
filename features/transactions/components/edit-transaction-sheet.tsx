@@ -56,10 +56,14 @@ export const EditTransactionSheet = () => {
 
     return null;
   };
-  const categoryOptions = (categoryQuery.data ?? []).map((category) => ({
-    label: category.name,
-    value: category.id,
-  }));
+
+  const categoryOptions: Array<{ label: string; value: string | null }> = [
+    ...(categoryQuery.data ?? []).map((category) => ({
+      label: category.name,
+      value: category.id,
+    })),
+    { label: "Uncategorized", value: null },
+  ];
 
   const accountMutation = useCreateAccount();
   const accountQuery = useGetAccounts();

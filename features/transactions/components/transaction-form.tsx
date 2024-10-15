@@ -44,7 +44,7 @@ type Props = {
   disabled?: boolean;
   isLoading?: boolean;
   accountOptions: { label: string; value: string }[];
-  categoryOptions: { label: string; value: string }[];
+  categoryOptions: { label: string; value: string | null }[];
   onCreateAccount: (
     name: string
   ) => Promise<CreateAccountResponseType200 | null>;

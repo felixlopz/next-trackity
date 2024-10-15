@@ -5,9 +5,9 @@ import { SingleValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 type Props = {
-  onChange: (value?: string) => void;
+  onChange: (value?: string | null) => void;
   onCreate?: (value: string) => void;
-  options?: { label: string; value: string }[];
+  options?: { label: string; value: string | null }[];
   value?: string | null | undefined;
   disabled?: boolean;
   placeholder?: string;
@@ -21,7 +21,9 @@ const Select = ({
   options = [],
   placeholder,
 }: Props) => {
-  const onSelect = (option: SingleValue<{ label: string; value: string }>) => {
+  const onSelect = (
+    option: SingleValue<{ label: string; value: string | null }>
+  ) => {
     onChange(option?.value);
   };
 
