@@ -7,7 +7,7 @@ import Filters from "@/components/filters";
 
 import { UserButton, ClerkLoading, ClerkLoaded } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import { FilterType, routes } from "@/contants/routes";
+import { routes } from "@/contants/routes";
 import { usePathname } from "next/navigation";
 
 function Header() {
