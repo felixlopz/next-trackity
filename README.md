@@ -19,5 +19,8 @@
 - [ ] BulkDelete from csv importation
 - [ ] Implement Subscription Base Systems
 
+  - [ ] Research & planning
+  - [ ] Implementation
+
 - [ ] Look for better error handling with names
 - [ ] Landing Page

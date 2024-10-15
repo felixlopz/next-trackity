@@ -22,7 +22,7 @@ export const useSelectAccount = (): [
   const [promise, setPromise] = useState<{
     resolve: (value: string | undefined) => void;
   } | null>(null);
-  const selectValue = useRef<string>();
+  const selectValue = useRef<string | null>();
 
   const accountQuery = useGetAccounts();
   const accountMutation = useCreateAccount();
