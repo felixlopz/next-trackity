@@ -1,7 +1,7 @@
 "use client";
 
 import HeaderLogo from "@/components/header-logo";
-import Navigation from "@/components/navigation";
+import Navigation from "@/components/navigation-comp";
 import WelcomeMessage from "@/components/welcome-message";
 import Filters from "@/components/filters";
 
