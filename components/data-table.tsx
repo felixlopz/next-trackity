@@ -62,6 +62,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    autoResetPageIndex: false,
     initialState: {
       pagination: {
         pageSize: 25,
