@@ -1,20 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useMedia } from "react-use";
+import { Menu } from "lucide-react";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import NavButton from "@/components/nav-button";
 import { Button } from "@/components/ui/button";
-
-import { useState } from "react";
-import { Menu } from "lucide-react";
-const routes = [
-  { href: "/", label: "Overview" },
-  { href: "/transactions", label: "Transactions" },
-  { href: "/accounts", label: "Accounts" },
-  { href: "/categories", label: "Categories" },
-  { href: "/settings", label: "Settings" },
-];
+import { routes } from "@/contants/routes";
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);

@@ -3,9 +3,10 @@ import React from "react";
 
 interface Props {
   children: React.ReactNode;
+  params: any;
 }
 
-const DashboardLayout: React.FC<Props> = ({ children }) => {
+const PageLayout: React.FC<Props> = ({ children, params }) => {
   return (
     <>
       <Header />
@@ -14,4 +15,4 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default DashboardLayout;
+export default PageLayout;

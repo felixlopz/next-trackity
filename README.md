@@ -13,11 +13,11 @@
   - [x] Pass the ids and the selected values to update to the bulk-up endpoint of the transaction api
 
 - [ ] Change Banner Message Corresponding Page (example doesn't make sense to a have a date filtering on categories, accounts pages)
-
-- [ ] Keep looking row when update
+  - [ ] Check for state of the filter input
+- [ ] Keep on the same page of the table when updating data
 - [ ] BulkDelete from csv importation
+- [ ] Implement Subscription Base Systems
 - [ ] Disable Dates
 
 - [ ] Look for better error handling with names
-- [ ] Implement Subscription Base Systems
 - [ ] Landing Page
