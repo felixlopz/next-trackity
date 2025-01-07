@@ -35,10 +35,10 @@ export const routes: Route[] = [
     welcomeMessage: "Here are your categories.",
     filters: [],
   },
-  {
-    href: "/settings",
-    label: "Settings",
-    welcomeMessage: "Customize your settings.",
-    filters: [],
-  },
+  // {
+  //   href: "/settings",
+  //   label: "Settings",
+  //   welcomeMessage: "Customize your settings.",
+  //   filters: [],
+  // },
 ];
